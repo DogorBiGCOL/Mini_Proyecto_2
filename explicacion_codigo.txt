@@ -1,0 +1,47 @@
+# Explicación del Código: Sistema de Batalla Pokémon
+
+Este archivo describe cómo funciona el programa `pokemon_game.py`, paso a paso.
+
+## 1. Clase `Pokemon`
+Esta clase es el plano para crear un objeto Pokémon individual.
+- **`__init__`**: Es el constructor. Recibe los datos (nombre, tipo, HP, ataque, defensa, velocidad) y los guarda en el objeto.
+- **`__str__`**: Este método especial define cómo se ve el Pokémon cuando lo imprimes (por ejemplo, `print(pikachu)`). Crea el diseño de la "impresión de carta" con el recuadro.
+
+## 2. Clase `Pokedex`
+Esta clase funciona como el administrador o base de datos.
+- **`__init__`**: Inicia la Pokédex y llama automáticamente a `load_from_csv` para cargar los datos.
+- **`load_from_csv`**:
+    - Abre el archivo `pokemon.csv`.
+    - Usa `csv.DictReader` para leer fila por fila.
+    - Crea un objeto `Pokemon` por cada fila y lo guarda en un diccionario `self.pokemons`.
+    - La clave del diccionario es el nombre en minúsculas (para facilitar la búsqueda).
+- **`add_pokemon`**: Agrega un nuevo Pokémon al diccionario manualmente.
+- **`delete_pokemon`**: Elimina un Pokémon del diccionario usando su nombre.
+- **`modify_pokemon`**: Busca un Pokémon y actualiza sus estadísticas (HP, Ataque, etc.) si se proporcionan nuevos valores.
+- **`get_pokemon`**: Busca y devuelve un objeto Pokémon por su nombre.
+- **`list_pokemons`**: Devuelve una lista de todos los objetos Pokémon almacenados.
+
+## 3. Clase `Battle` (Batalla)
+Esta clase maneja la lógica de combate.
+- **`simulate`**: Es un método estático (no necesita una instancia de la clase).
+    - Recibe dos objetos Pokémon (`pokemon1` y `pokemon2`).
+    - Compara sus valores de **`attack`** (Ataque).
+    - El que tenga el número más alto gana e imprime el resultado.
+    - Si son iguales, declara un empate.
+
+## 4. Función `main` (Principal)
+Es el punto de entrada del programa.
+- **Configuración**: Encuentra la ruta absoluta del archivo `pokemon.csv` para evitar errores de "archivo no encontrado".
+- **Bucle Infinito (`while True`)**: Mantiene el programa corriendo hasta que el usuario elija salir.
+- **Menú**: Muestra las opciones (1-7) y espera la entrada del usuario (`input`).
+    - Opción 1: Lista los Pokémon (muestra solo los primeros 20 para no saturar la pantalla).
+    - Opción 2: Pide un nombre y muestra su carta.
+    - Opción 3, 4, 5: Llaman a los métodos de la `Pokedex` para agregar, modificar o borrar.
+    - Opción 6: Pide dos nombres y llama a `Battle.simulate`.
+    - Opción 7: Rompe el bucle (`break`) y termina el programa.
+
+## Flujo General
+1. El programa inicia.
+2. Carga los datos del CSV en la memoria RAM (`Pokedex`).
+3. El usuario interactúa con el menú para ver o manipular esos datos en memoria.
+4. Si se simula una batalla, se comparan los datos cargados.
